@@ -16,8 +16,8 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: '9f248ae0-6b7a-4ccc-89e1-16b30e50a667', keyFileVariable: 'key')]) {
                     bat '''
-                        scp -i $key securePodToDeploy.yaml master@192.168.100.8:/home/master
-                        ssh -i $key master@192.168.100.8 "kubectl apply -f securePodToDeploy.yaml" '''
+                        scp -i ${key} securePodToDeploy.yaml master@192.168.100.8:/home/master
+                        ssh -i ${key} master@192.168.100.8 "kubectl apply -f securePodToDeploy.yaml" '''
                 }
             }
         }
