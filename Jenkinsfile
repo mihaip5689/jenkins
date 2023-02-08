@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Run python script to check for security vulnerabilities') {
             steps {
-                sh 'python ./checkSecurityVulnerabilities.py'
+                bat 'python ./checkSecurityVulnerabilities.py'
             }
         }
         stage('Deploy') {
