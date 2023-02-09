@@ -29,10 +29,8 @@ for ct in configuration['spec']['containers']:
         print('Disabling privilege escalation')
         print('Setting default user ID and group ID')
         print('Setting read only root file system')
-        ct['securityContext'] = { 'allowPrivilegeEscalation': False,
-                                  'runAsUser': 1000,
-                                  'runAsGroup': 1000,
-                                  'readOnlyFileSystem': True}
+        ct['securityContext'] = { 'allowPrivilegeEscalation': False, 'runAsUser': 1000,
+                                  'runAsGroup': 1000, 'readOnlyFileSystem': True}
     else:
         sC = ct['securityContext']
         if 'runAsUser' in sC and sC['runAsUser'] == 0:
@@ -52,35 +50,9 @@ for ct in configuration['spec']['containers']:
             print('Setting read only root file system for container: ' + ct['name'])
             ct['securityContext']['readOnlyRootFileSystem'] = True
 
-
-# for ct in configuration['spec']['containers']:
-#     print('Checking user ID and group ID for container: ' + ct['name'])
-#     if 'securityContext' not in ct:
-#         print('Insecure container:: Security Context not configured. Applying default configuration.')
-#         print('Disabling privilege escalation')
-#         ct['securityContext'] = {'allowPrivilegeEscalation': False}
-#     else:
-#         sC = ct['securityContext']
-#         if sC['allowPrivilegeEscalation'] == 'true':
-#             print('Insecure container:: Allowed privilege escalation. Applying default configuration.')
-#             ct['securityContext'] = {'allowPrivilegeEscalation': False}
-#
-#
-# for ct in configuration['spec']['containers']:
-#     print('Checking privilege escalation for container: ' + ct['name'])
-#     if 'securityContext' not in ct:
-#         print('Insecure container:: Security Context not configured. Applying default configuration.')
-#         ct['securityContext'] = {'allowPrivilegeEscalation': False}
-#     else:
-#         sC = ct['securityContext']
-#         if sC['allowPrivilegeEscalation'] == 'true':
-#             print('Insecure container:: Allowed privilege escalation. Applying default configuration.')
-#             ct['securityContext'] = {'allowPrivilegeEscalation': False}
-
 configuration['metadata']['name'] = 'secure-pod'
-
-with open('securePodToDeploy2.yaml', 'w') as f:
+with open('securePodToDeploy.yaml', 'w') as f:
     yaml.safe_dump(configuration, f, indent=2)
 
 fileToRemove = pathlib.Path('./podToDeploy.yaml')
-#fileToRemove.unlink()
+fileToRemove.unlink()
