@@ -27,12 +27,12 @@ for ct in configuration['spec']['containers']:
         print('Insecure container:: Security Context not configured.')
         print('Applying default configuration for container: ' + ct['name'])
         print('Disabling privilege escalation')
-        ct['securityContext']['allowPrivilegeEscalation'] = False
         print('Setting default user ID and group ID')
-        ct['securityContext']['runAsUser'] = 1000
-        ct['securityContext']['runAsGroup'] = 1000
         print('Setting read only root file system')
-        ct['securityContext']['readOnlyRootFileSystem'] = True
+        ct['securityContext'] = { 'allowPrivilegeEscalation': False,
+                                  'runAsUser': 1000,
+                                  'runAsGroup': 1000,
+                                  'readOnlyFileSystem': True}
     else:
         sC = ct['securityContext']
         if 'runAsUser' in sC and sC['runAsUser'] == 0:
@@ -79,8 +79,8 @@ for ct in configuration['spec']['containers']:
 
 configuration['metadata']['name'] = 'secure-pod'
 
-with open('securePodToDeploy.yaml', 'w') as f:
+with open('securePodToDeploy2.yaml', 'w') as f:
     yaml.safe_dump(configuration, f, indent=2)
 
 fileToRemove = pathlib.Path('./podToDeploy.yaml')
-fileToRemove.unlink()
+#fileToRemove.unlink()
