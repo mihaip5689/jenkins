@@ -30,6 +30,7 @@ for ct in configuration['spec']['containers']:
         if sC['allowPrivilegeEscalation'] == 'true':
             print('Insecure container:: Allowed privilege escalation. Applying default configuration.')
             ct['securityContext'] = {'allowPrivilegeEscalation': False}
+configuration['metadata']['name'] = 'secure-pod'
 
 with open('securePodToDeploy.yaml', 'w') as f:
     yaml.safe_dump(configuration, f, indent=2)
