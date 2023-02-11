@@ -15,7 +15,7 @@ pipeline {
         stage('Get file name') {
             steps {
                 script {
-                    filename = sh(script: 'ls | grep .yaml', returnStdout: true).trim()
+                    fileName = sh(script: 'ls | grep .yaml', returnStdout: true).trim()
                 }
             }
         }
