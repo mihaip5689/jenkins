@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        fileName = ""
+    }
     stages {
         stage('Checkout code') {
             steps {
@@ -14,15 +16,15 @@ pipeline {
         }
         stage('Get file name') {
             steps {
-                sh 'ls | grep .yaml'
+                filename = sh 'ls | grep .yaml'
             }
         }
         stage('Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'df0feef0-6f82-4731-87de-8b66d3512f3b', keyFileVariable: 'key')]) {
                     sh """
-                        scp -i ${key} -o StrictHostKeyChecking=no securePodToDeploy.yaml master@192.168.100.8:/home/master
-                        ssh -i ${key} -o StrictHostKeyChecking=no master@192.168.100.8 "kubectl apply -f securePodToDeploy.yaml"
+                        scp -i ${key} -o StrictHostKeyChecking=no ${fileName} master@192.168.100.8:/home/master
+                        ssh -i ${key} -o StrictHostKeyChecking=no master@192.168.100.8 "kubectl apply -f ${fileName}"
                         """
                 }
             }
