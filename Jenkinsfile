@@ -14,7 +14,9 @@ pipeline {
         }
         stage('Get file name') {
             steps {
-                filename = sh(script: 'ls | grep .yaml', returnStdout: true).trim()
+                script {
+                    filename = sh(script: 'ls | grep .yaml', returnStdout: true).trim()
+                }
             }
         }
         stage('Deploy') {
