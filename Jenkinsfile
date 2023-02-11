@@ -1,8 +1,6 @@
+def fileName = ""
 pipeline {
     agent any
-    environment {
-        fileName = ""
-    }
     stages {
         stage('Checkout code') {
             steps {
@@ -16,7 +14,7 @@ pipeline {
         }
         stage('Get file name') {
             steps {
-                filename = sh 'ls | grep .yaml'
+                filename = sh(script: 'ls | grep .yaml', returnStdout: true).trim()
             }
         }
         stage('Deploy') {
