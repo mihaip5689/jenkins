@@ -12,6 +12,11 @@ pipeline {
                 sh 'python ./checkSecurityVulnerabilities.py'
             }
         }
+        stage('Get file name') {
+            steps {
+                sh 'ls | grep .yaml'
+            }
+        }
         stage('Deploy') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'df0feef0-6f82-4731-87de-8b66d3512f3b', keyFileVariable: 'key')]) {
