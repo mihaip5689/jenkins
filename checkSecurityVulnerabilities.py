@@ -58,10 +58,10 @@ def checkSecurityContext():
                     print('Insecure container:: Allowed privilege escalation.')
                     print('Disabling privilege escalation for container: ' + ct['name'])
                     ct['securityContext']['allowPrivilegeEscalation'] = False
-                if sC['readOnlyRootFileSystem'] == 'false':
+                if sC['readOnlyRootFilesystem'] == 'false':
                     print('Insecure container:: Allowed access to root file system.')
                     print('Setting read only root file system for container: ' + ct['name'])
-                    ct['securityContext']['readOnlyRootFileSystem'] = True
+                    ct['securityContext']['readOnlyRootFilesystem'] = True
     
         with open(fileName, 'w') as f:
             yaml.safe_dump(configuration, f, indent=2)
