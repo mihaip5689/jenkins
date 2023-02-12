@@ -11,6 +11,14 @@ def checkSecurityContext():
         print(configuration)
         spec = configuration['spec']
         containers = spec['containers']
+        print('Checking namespace')
+        if 'namespace' not in configuration['metadata']:
+            print('No specified namespace. Deploying to readOnly ns')
+            configuration['metadata']['namespace'] = 'read-only'
+        print('Checking user ID and group ID for pod: ' + configuration['metadata']['name'])
+        if 'serviceAccountName' not in spec:
+            print('No service account set. Granting read only permissions')
+            configuration['spec']['serviceAccountName'] = 'read-only-serviceaccount'
         print('Checking user ID and group ID for pod: ' + configuration['metadata']['name'])
         if 'securityContext' not in spec:
             print('Insecure pod:: Security Context not configured. Applying default configuration.')
