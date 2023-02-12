@@ -43,7 +43,7 @@ def checkSecurityContext():
                 ct['securityContext'] = { 'allowPrivilegeEscalation': False,
                                           'runAsUser': 1000,
                                           'runAsGroup': 1000,
-                                          'readOnlyFilesystem': True}
+                                          'readOnlyRootFilesystem': True}
             else:
                 sC = ct['securityContext']
                 if 'runAsUser' in sC and sC['runAsUser'] == 0:
