@@ -43,6 +43,7 @@ def checkSecurityContext():
                 ct['securityContext'] = { 'allowPrivilegeEscalation': False,
                                           'runAsUser': 1000,
                                           'runAsGroup': 1000,
+                                          'privileged' : False,
                                           'readOnlyRootFilesystem': True}
             else:
                 sC = ct['securityContext']
@@ -58,6 +59,8 @@ def checkSecurityContext():
                     print('Insecure container:: Allowed privilege escalation.')
                     print('Disabling privilege escalation for container: ' + ct['name'])
                     ct['securityContext']['allowPrivilegeEscalation'] = False
+                if 'privileged' in sC and sC['privileged'] == 'true':
+                    ct['securityContext']['privileged'] = False
                 if sC['readOnlyRootFilesystem'] == 'false':
                     print('Insecure container:: Allowed access to root file system.')
                     print('Setting read only root file system for container: ' + ct['name'])
