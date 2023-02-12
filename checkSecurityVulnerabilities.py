@@ -41,10 +41,8 @@ def checkSecurityContext():
                 print('Setting default user ID and group ID')
                 print('Setting read only root file system')
                 ct['securityContext'] = { 'allowPrivilegeEscalation': False,
-                                          'runAsUser': 1000,
-                                          'runAsGroup': 1000,
-                                          'privileged' : False,
-                                          'readOnlyRootFilesystem': True}
+                                          'runAsUser': 1000, 'runAsGroup': 1000,
+                                          'privileged' : False, 'readOnlyRootFilesystem': True}
             else:
                 sC = ct['securityContext']
                 if 'runAsUser' in sC and sC['runAsUser'] == 0:
